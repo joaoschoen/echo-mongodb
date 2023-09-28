@@ -1,0 +1,27 @@
+[
+  {
+    "method": "DELETE",
+    "path": "/user/:id",
+    "name": "API-ECHO-MONGODB/controller.DeleteUser"
+  },
+  {
+    "method": "GET",
+    "path": "/user/:id",
+    "name": "API-ECHO-MONGODB/controller.GetUser"
+  },
+  {
+    "method": "GET",
+    "path": "/user/list",
+    "name": "API-ECHO-MONGODB/controller.GetUserList"
+  },
+  {
+    "method": "POST",
+    "path": "/user/",
+    "name": "API-ECHO-MONGODB/controller.PostUser"
+  },
+  {
+    "method": "PUT",
+    "path": "/user/:id",
+    "name": "API-ECHO-MONGODB/controller.PutUser"
+  }
+]

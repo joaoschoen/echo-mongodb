@@ -1,0 +1,160 @@
+definitions:
+  model.DeleteUserResponse:
+    properties:
+      id:
+        type: string
+    type: object
+  model.GetUserListResponse:
+    properties:
+      data:
+        items:
+          $ref: '#/definitions/model.SafeUser'
+        type: array
+      paging:
+        $ref: '#/definitions/model.Paging'
+    type: object
+  model.GetUserResponse:
+    properties:
+      data:
+        $ref: '#/definitions/model.SafeUser'
+    type: object
+  model.Paging:
+    properties:
+      page:
+        type: integer
+      total:
+        type: integer
+    type: object
+  model.PostUserResponse:
+    properties:
+      id:
+        type: string
+    type: object
+  model.SafeUser:
+    properties:
+      email:
+        type: string
+      id:
+        type: string
+    type: object
+info:
+  contact:
+    email: joaoschoen@gmail.com
+    name: My linkedin profile
+    url: https://www.linkedin.com/in/joaoschoen/
+  description: This is an API base without database interaction
+  title: REST Echo Base
+  version: "1.0"
+paths:
+  /user:
+    delete:
+      description: Receives user ID, returns deleted ID
+      parameters:
+      - description: User ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.DeleteUserResponse'
+        "404":
+          description: User not found.
+      summary: Delete user
+      tags:
+      - user
+    post:
+      consumes:
+      - application/json
+      description: Receives user email and password, returns UUID
+      parameters:
+      - description: User email
+        in: path
+        name: email
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/model.PostUserResponse'
+        "400":
+          description: Bad Request
+        "422":
+          description: Email already in use
+        "500":
+          description: Internal server error
+      summary: Create new user
+      tags:
+      - user
+    put:
+      consumes:
+      - application/json
+      description: Receives updated user object, returns updated object
+      parameters:
+      - description: User ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.PostUserResponse'
+        "400":
+          description: Email already in use
+        "404":
+          description: User not found.
+        "500":
+          description: Internal server error
+      summary: Update user
+      tags:
+      - user
+  /user/{id}:
+    get:
+      description: Receives ID by request param and retreives user data
+      parameters:
+      - description: User ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.GetUserResponse'
+        "404":
+          description: User not found.
+      summary: Get user data
+      tags:
+      - user
+  /user/list:
+    get:
+      description: |-
+        Can receive email as a query filter
+        This route is paged, it requrires a page number to operate if none is received, will return page 0
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.GetUserListResponse'
+        "500":
+          description: Internal server error
+      summary: Get user list
+      tags:
+      - user
+swagger: "2.0"
