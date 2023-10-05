@@ -2,15 +2,17 @@ package view
 
 import (
 	"API-ECHO-MONGODB/controller/user"
+	"API-ECHO-MONGODB/middleware"
+	"API-ECHO-MONGODB/model"
 
 	"github.com/labstack/echo/v4"
 )
 
 func UserRoutes(server *echo.Echo) {
 	group := server.Group("/user")
-	group.POST("", user.PostUser)
+	group.POST("", middleware.CheckBody(user.PostUser, model.UnsafeUser{}))
 	group.GET("/:id", user.GetUser)
 	group.GET("/list", user.GetUserList)
-	group.PUT("/:id", user.PutUser)
+	group.PUT("/:id", middleware.CheckBody(user.PutUser, model.UnsafeUser{}))
 	group.DELETE("/:id", user.DeleteUser)
 }

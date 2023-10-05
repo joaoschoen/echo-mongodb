@@ -29,8 +29,6 @@ func Login(echo echo.Context) error {
 	if err := echo.Bind(&loginInfo); err != nil {
 		return echo.JSON(http.StatusBadRequest, "Bad username and password combination")
 	}
-	println(loginInfo.Email)
-	println(loginInfo.Password)
 
 	// Empty data
 	if loginInfo.Email == "" || loginInfo.Password == "" {
@@ -42,8 +40,6 @@ func Login(echo echo.Context) error {
 	if err := mongodb.FindOne("user", bson.D{{Key: "email", Value: loginInfo.Email}}).Decode(&user); err != nil {
 		return echo.JSON(http.StatusBadRequest, "Bad username and password combination")
 	}
-	println(user.Email)
-	println(user.Email)
 	// BCRIPT
 	if err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(loginInfo.Password)); err != nil {
 		return echo.JSON(http.StatusBadRequest, "Bad username and password combination")

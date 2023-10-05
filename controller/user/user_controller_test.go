@@ -41,15 +41,6 @@ func TestPostUser(t *testing.T) {
 	var recorder *httptest.ResponseRecorder
 	var context echo.Context
 
-	// TEST PREPARATION
-	BadlyFormedJSON := func() {
-		DATA = strings.NewReader(badlyFormedJSON)
-		request = httptest.NewRequest(METHOD, URL, DATA)
-		request.Header.Set("Content-Type", "application/json")
-		recorder = httptest.NewRecorder()
-		context = TestServer.NewContext(request, recorder)
-		return
-	}
 	EmptyObjectBodyTest := func() {
 		user, err := json.Marshal(emptyUser)
 		if err != nil {
@@ -85,11 +76,6 @@ func TestPostUser(t *testing.T) {
 	}
 
 	// TESTS
-	BadlyFormedJSON()
-	if assert.NoError(t, PostUser(context)) {
-		assert.Equal(t, http.StatusBadRequest, recorder.Code)
-	}
-
 	EmptyObjectBodyTest()
 	if assert.NoError(t, PostUser(context)) {
 		assert.Equal(t, http.StatusBadRequest, recorder.Code)
@@ -253,14 +239,6 @@ func TestPutUser(t *testing.T) {
 	var context echo.Context
 
 	// TEST PREPARATION
-	BadlyFormedJSON := func() {
-		DATA = strings.NewReader(badlyFormedJSON)
-		request = httptest.NewRequest(METHOD, URL, DATA)
-		request.Header.Set("Content-Type", "application/json")
-		recorder = httptest.NewRecorder()
-		context = TestServer.NewContext(request, recorder)
-		return
-	}
 	NotFound := func() {
 		user, err := json.Marshal(successfulUser)
 		if err != nil {
@@ -273,7 +251,6 @@ func TestPutUser(t *testing.T) {
 		context.SetPath("/users/:id")
 		context.SetParamNames("id")
 		context.SetParamValues("404")
-		return
 	}
 	EmptyObjectBodyTest := func() {
 		user, err := json.Marshal(emptyUser)
@@ -287,7 +264,6 @@ func TestPutUser(t *testing.T) {
 		context.SetPath("/users/:id")
 		context.SetParamNames("id")
 		context.SetParamValues("someID")
-		return
 	}
 	AlreadyInUseTest := func() {
 		user, err := json.Marshal(alreadyInUseUser)
@@ -301,7 +277,6 @@ func TestPutUser(t *testing.T) {
 		context.SetPath("/users/:id")
 		context.SetParamNames("id")
 		context.SetParamValues("someID")
-		return
 	}
 	SuccessTest := func() {
 		user, err := json.Marshal(successfulUser)
@@ -315,15 +290,9 @@ func TestPutUser(t *testing.T) {
 		context.SetPath("/users/:id")
 		context.SetParamNames("id")
 		context.SetParamValues("someID")
-		return
 	}
 
 	// TESTS
-	BadlyFormedJSON()
-	if assert.NoError(t, PutUser(context)) {
-		assert.Equal(t, http.StatusBadRequest, recorder.Code)
-	}
-
 	NotFound()
 	if assert.NoError(t, PutUser(context)) {
 		assert.Equal(t, http.StatusNotFound, recorder.Code)
@@ -365,7 +334,6 @@ func TestDeleteUser(t *testing.T) {
 		context.SetPath("/users/:id")
 		context.SetParamNames("id")
 		context.SetParamValues("404")
-		return
 	}
 	SuccessTest := func() {
 		request = httptest.NewRequest(METHOD, URL, nil)
@@ -375,7 +343,6 @@ func TestDeleteUser(t *testing.T) {
 		context.SetPath("/users/:id")
 		context.SetParamNames("id")
 		context.SetParamValues("someID")
-		return
 	}
 
 	// TESTS

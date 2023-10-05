@@ -1,8 +1,13 @@
 [
   {
     "method": "POST",
+    "path": "/auth/login",
+    "name": "API-ECHO-MONGODB/view.AuthRoutes.CheckBody.func1"
+  },
+  {
+    "method": "POST",
     "path": "/user",
-    "name": "API-ECHO-MONGODB/controller/user.PostUser"
+    "name": "API-ECHO-MONGODB/view.UserRoutes.CheckBody.func1"
   },
   {
     "method": "GET",
@@ -17,16 +22,11 @@
   {
     "method": "PUT",
     "path": "/user/:id",
-    "name": "API-ECHO-MONGODB/controller/user.PutUser"
+    "name": "API-ECHO-MONGODB/view.UserRoutes.CheckBody.func2"
   },
   {
     "method": "DELETE",
     "path": "/user/:id",
     "name": "API-ECHO-MONGODB/controller/user.DeleteUser"
-  },
-  {
-    "method": "POST",
-    "path": "/auth/login",
-    "name": "API-ECHO-MONGODB/view.AuthRoutes.CheckBody.func1"
   }
 ]

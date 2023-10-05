@@ -18,7 +18,6 @@ import (
 
 // POST TESTS
 var (
-	badlyFormedJSON  = "{bad::form}"
 	emptyUser        = model.UnsafeUser{}
 	alreadyInUseUser = model.UnsafeUser{
 		Email:    "alreadyIn@use.com",
@@ -41,14 +40,6 @@ func TestLogin(t *testing.T) {
 	var context echo.Context
 
 	// TEST PREPARATION
-	BadlyFormedJSON := func() {
-		DATA = strings.NewReader(badlyFormedJSON)
-		request = httptest.NewRequest(METHOD, URL, DATA)
-		request.Header.Set("Content-Type", "application/json")
-		recorder = httptest.NewRecorder()
-		context = TestServer.NewContext(request, recorder)
-		return
-	}
 	EmptyObjectBodyTest := func() {
 		user, err := json.Marshal(emptyUser)
 		if err != nil {
@@ -84,11 +75,6 @@ func TestLogin(t *testing.T) {
 	}
 
 	// TESTS
-	BadlyFormedJSON()
-	if assert.NoError(t, Login(context)) {
-		assert.Equal(t, http.StatusBadRequest, recorder.Code)
-	}
-
 	EmptyObjectBodyTest()
 	if assert.NoError(t, Login(context)) {
 		assert.Equal(t, http.StatusBadRequest, recorder.Code)
