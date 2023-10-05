@@ -1,27 +1,32 @@
 [
   {
-    "method": "DELETE",
-    "path": "/user/:id",
-    "name": "API-ECHO-MONGODB/controller.DeleteUser"
+    "method": "POST",
+    "path": "/user",
+    "name": "API-ECHO-MONGODB/controller/user.PostUser"
   },
   {
     "method": "GET",
     "path": "/user/:id",
-    "name": "API-ECHO-MONGODB/controller.GetUser"
+    "name": "API-ECHO-MONGODB/controller/user.GetUser"
   },
   {
     "method": "GET",
     "path": "/user/list",
-    "name": "API-ECHO-MONGODB/controller.GetUserList"
-  },
-  {
-    "method": "POST",
-    "path": "/user/",
-    "name": "API-ECHO-MONGODB/controller.PostUser"
+    "name": "API-ECHO-MONGODB/controller/user.GetUserList"
   },
   {
     "method": "PUT",
     "path": "/user/:id",
-    "name": "API-ECHO-MONGODB/controller.PutUser"
+    "name": "API-ECHO-MONGODB/controller/user.PutUser"
+  },
+  {
+    "method": "DELETE",
+    "path": "/user/:id",
+    "name": "API-ECHO-MONGODB/controller/user.DeleteUser"
+  },
+  {
+    "method": "POST",
+    "path": "/auth/login",
+    "name": "API-ECHO-MONGODB/view.AuthRoutes.CheckBody.func1"
   }
 ]

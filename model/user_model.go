@@ -7,8 +7,8 @@ type UnsafeUser struct {
 }
 
 type SafeUser struct {
-	ID    string `json:"id"`
-	Email string `json:"email"`
+	ID    interface{} `json:"id"`
+	Email string      `json:"email"`
 }
 
 // RESPONSE OBJECTS
@@ -22,7 +22,7 @@ type GetUserListResponse struct {
 }
 
 type PostUserResponse struct {
-	ID string
+	ID interface{}
 }
 
 type PutUserResponse struct {
@@ -30,5 +30,5 @@ type PutUserResponse struct {
 }
 
 type DeleteUserResponse struct {
-	ID string
+	ID interface{}
 }

@@ -100,3 +100,34 @@ You can also add the **-cover** flag at the end to see test coverage in all the 
 ### DELETE
 
 - :id based endpoint to DELETE an object with given id
+
+# Writing
+
+One particular design choice I made for this project is to make the names of my variables and functions be more verbose and self descriptive then what I usually see in golang projects 
+
+I much prefer to work with code like this: 
+```
+func DeleteUser(echo echo.Context) error {
+	var id string
+	id = echo.Param("id")
+
+	response := model.DeleteUserResponse{
+		ID: id,
+	}
+
+	return echo.JSON(http.StatusOK, response)
+}
+```
+Then this:
+```
+func DeleteUser(e echo.Context) error {
+	var id string
+	id = e.Param("id")
+
+	r := model.DeleteUserResponse{
+		ID: id,
+	}
+
+	return e.JSON(http.StatusOK, r)
+}
+```

@@ -81,17 +81,17 @@ const docTemplate = `{
                     }
                 ],
                 "responses": {
-                    "201": {
-                        "description": "Created",
+                    "200": {
+                        "description": "OK",
                         "schema": {
                             "$ref": "#/definitions/model.PostUserResponse"
                         }
                     },
                     "400": {
-                        "description": "Bad Request"
-                    },
-                    "422": {
                         "description": "Email already in use"
+                    },
+                    "404": {
+                        "description": "User not found."
                     },
                     "500": {
                         "description": "Internal server error"
