@@ -10,7 +10,7 @@ Any changes to the base project made in this one that are beneficial to the base
 
 # **Important:** This is a warning message.
 
-This code is not made with the intention of being safe and should not be used in a serious application as is, reason why all the mentions to passwords use the "BadExample" text, there is no authentication yet, I will be implementing it in the future though.
+This code is not made with the intention of being safe and should not be used in a serious application as is, reason why all the mentions to passwords use the "BadExample" text.
 
 This is a learning project, by the end of it I want to have a fully functional and safe API that could be used as an example of how to do things in golang without having to search too much for it and also as a repository of my knowledge of how to do things in golang.
 
@@ -20,7 +20,7 @@ This is a learning project, by the end of it I want to have a fully functional a
 - Routing with multiple files and folders
 - JSON format for data interchange
 - Documentation using Swagger 2.0
-- Unit testing with 100% coverage
+- Unit testing
 
 ## Libs used
 
