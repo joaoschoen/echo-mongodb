@@ -52,15 +52,8 @@ func main() {
 	}
 
 	// DB CONFIG
-	MONGODB_URI := os.Getenv("MONGODB_URI")
-	DATABASE := os.Getenv("DATABASE")
-	if MONGODB_URI == "" {
-		log.Fatal("You must set your 'MONGODB_URI' environment variable. See\n\t https://www.mongodb.com/docs/drivers/go/current/usage-examples/#environment-variable")
-	}
-	if DATABASE == "" {
-		log.Fatal("You must set your 'DATABASE' environment variable.")
-	}
-	client := mongodb.Connect(MONGODB_URI)
+
+	client := mongodb.Connect()
 	defer func() {
 		if err := client.Disconnect(context.TODO()); err != nil {
 			panic(err)

@@ -40,6 +40,7 @@ func Login(echo echo.Context) error {
 	if err := mongodb.FindOne("user", bson.D{{Key: "email", Value: loginInfo.Email}}).Decode(&user); err != nil {
 		return echo.JSON(http.StatusBadRequest, "Bad username and password combination")
 	}
+
 	// BCRIPT
 	if err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(loginInfo.Password)); err != nil {
 		return echo.JSON(http.StatusBadRequest, "Bad username and password combination")
@@ -66,5 +67,5 @@ func Login(echo echo.Context) error {
 	response := model.AuthToken{
 		Token: signedToken,
 	}
-	return echo.JSON(http.StatusCreated, response)
+	return echo.JSON(http.StatusOK, response)
 }
