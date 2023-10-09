@@ -75,6 +75,8 @@ This api uses a .env file for configuration, at the current moment here are the 
 
 Testing this API was done with mock tests and the [Testify](https://github.com/stretchr/testify) lib for assertions alongside Golang's standard testing library
 
+The tests require a .env file inside the test folder and that inlcudes a MongoDB connection string to work properly, later I do plan on making the code launch a mongodb instance during the test setup process
+
 To run all tests, run the following command: 
 ```
 go test ./... 
