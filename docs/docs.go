@@ -19,6 +19,44 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
+        "/auth/login": {
+            "post": {
+                "description": "Receives user email and password, returns token",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "auth"
+                ],
+                "summary": "Login",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User email",
+                        "name": "email",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.PostUserResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
         "/user": {
             "put": {
                 "description": "Receives updated user object, returns updated object",
@@ -81,17 +119,17 @@ const docTemplate = `{
                     }
                 ],
                 "responses": {
-                    "200": {
-                        "description": "OK",
+                    "201": {
+                        "description": "Created",
                         "schema": {
                             "$ref": "#/definitions/model.PostUserResponse"
                         }
                     },
                     "400": {
-                        "description": "Email already in use"
+                        "description": "Bad Request"
                     },
-                    "404": {
-                        "description": "User not found."
+                    "422": {
+                        "description": "Email already in use"
                     },
                     "500": {
                         "description": "Internal server error"
@@ -189,9 +227,7 @@ const docTemplate = `{
         "model.DeleteUserResponse": {
             "type": "object",
             "properties": {
-                "id": {
-                    "type": "string"
-                }
+                "id": {}
             }
         },
         "model.GetUserListResponse": {
@@ -230,9 +266,7 @@ const docTemplate = `{
         "model.PostUserResponse": {
             "type": "object",
             "properties": {
-                "id": {
-                    "type": "string"
-                }
+                "id": {}
             }
         },
         "model.SafeUser": {
@@ -241,9 +275,7 @@ const docTemplate = `{
                 "email": {
                     "type": "string"
                 },
-                "id": {
-                    "type": "string"
-                }
+                "id": {}
             }
         }
     }

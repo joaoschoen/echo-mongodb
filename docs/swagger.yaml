@@ -1,8 +1,7 @@
 definitions:
   model.DeleteUserResponse:
     properties:
-      id:
-        type: string
+      id: {}
     type: object
   model.GetUserListResponse:
     properties:
@@ -27,15 +26,13 @@ definitions:
     type: object
   model.PostUserResponse:
     properties:
-      id:
-        type: string
+      id: {}
     type: object
   model.SafeUser:
     properties:
       email:
         type: string
-      id:
-        type: string
+      id: {}
     type: object
 info:
   contact:
@@ -46,6 +43,31 @@ info:
   title: REST Echo Base
   version: "1.0"
 paths:
+  /auth/login:
+    post:
+      consumes:
+      - application/json
+      description: Receives user email and password, returns token
+      parameters:
+      - description: User email
+        in: path
+        name: email
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.PostUserResponse'
+        "400":
+          description: Bad Request
+        "500":
+          description: Internal server error
+      summary: Login
+      tags:
+      - auth
   /user:
     delete:
       description: Receives user ID, returns deleted ID
@@ -80,14 +102,14 @@ paths:
       produces:
       - application/json
       responses:
-        "200":
-          description: OK
+        "201":
+          description: Created
           schema:
             $ref: '#/definitions/model.PostUserResponse'
         "400":
+          description: Bad Request
+        "422":
           description: Email already in use
-        "404":
-          description: User not found.
         "500":
           description: Internal server error
       summary: Create new user
