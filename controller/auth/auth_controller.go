@@ -18,8 +18,8 @@ import (
 // @Tags			auth
 // @Accept			json
 // @Produce		json
-// @Param			email	path		string	true	"User email"
-// @Success		200		{object}	model.PostUserResponse
+// @Param 			request	body		model.UnsafeUser	true	"Login information"
+// @Success		200		{object}	model.AuthToken
 // @Failure		400 "Bad Request"
 // @Failure		500	"Internal server error"
 // @Router			/auth/login [post]

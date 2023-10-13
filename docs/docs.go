@@ -34,18 +34,20 @@ const docTemplate = `{
                 "summary": "Login",
                 "parameters": [
                     {
-                        "type": "string",
-                        "description": "User email",
-                        "name": "email",
-                        "in": "path",
-                        "required": true
+                        "description": "Login information",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.UnsafeUser"
+                        }
                     }
                 ],
                 "responses": {
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/model.PostUserResponse"
+                            "$ref": "#/definitions/model.AuthToken"
                         }
                     },
                     "400": {
@@ -224,6 +226,15 @@ const docTemplate = `{
         }
     },
     "definitions": {
+        "model.AuthToken": {
+            "description": "Access token generated from user and password",
+            "type": "object",
+            "properties": {
+                "token": {
+                    "type": "string"
+                }
+            }
+        },
         "model.DeleteUserResponse": {
             "type": "object",
             "properties": {
@@ -276,6 +287,17 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "id": {}
+            }
+        },
+        "model.UnsafeUser": {
+            "type": "object",
+            "properties": {
+                "email": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                }
             }
         }
     }

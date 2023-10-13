@@ -8,8 +8,6 @@ import (
 	"go.mongodb.org/mongo-driver/mongo"
 )
 
-type DatabaseLayer struct{}
-
 func FindOne(collection string, query primitive.D) *mongo.SingleResult {
 	// GET DB CONNECTION
 	db := GetConnection()

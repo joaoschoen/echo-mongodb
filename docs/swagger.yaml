@@ -1,4 +1,10 @@
 definitions:
+  model.AuthToken:
+    description: Access token generated from user and password
+    properties:
+      token:
+        type: string
+    type: object
   model.DeleteUserResponse:
     properties:
       id: {}
@@ -34,6 +40,13 @@ definitions:
         type: string
       id: {}
     type: object
+  model.UnsafeUser:
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+    type: object
 info:
   contact:
     email: joaoschoen@gmail.com
@@ -49,18 +62,19 @@ paths:
       - application/json
       description: Receives user email and password, returns token
       parameters:
-      - description: User email
-        in: path
-        name: email
+      - description: Login information
+        in: body
+        name: request
         required: true
-        type: string
+        schema:
+          $ref: '#/definitions/model.UnsafeUser'
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/model.PostUserResponse'
+            $ref: '#/definitions/model.AuthToken'
         "400":
           description: Bad Request
         "500":
