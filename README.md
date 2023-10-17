@@ -21,6 +21,9 @@ This is a learning project, by the end of it I want to have a fully functional a
 - JSON format for data interchange
 - Documentation using Swagger 2.0
 - Unit testing
+- Github actions for CI
+	- Running tests
+	- Testing build
 
 ## Libs used
 

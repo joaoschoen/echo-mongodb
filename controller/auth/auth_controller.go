@@ -54,7 +54,7 @@ func Login(echo echo.Context) error {
 		jwt.MapClaims{
 			"iss": "echo-api",
 			"sub": user.Email,
-			"aud": "book",
+			"aud": "user",
 			"exp": time.Now().AddDate(0, 0, 1).String(),
 		})
 	if signed, err := token.SignedString([]byte(TOKEN_SECRET)); err != nil {
@@ -72,7 +72,7 @@ func Login(echo echo.Context) error {
 
 // @Summary		Create new user
 // @Description	Receives user email and password, returns UUID
-// @Tags			user
+// @Tags			auth
 // @Accept			json
 // @Produce		json
 // @Param			email	path		string	true	"User email"

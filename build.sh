@@ -1,2 +1,2 @@
-# go build
-# docker build -t api-echo .
+go build -o app
+docker build -t api-echo:latest .

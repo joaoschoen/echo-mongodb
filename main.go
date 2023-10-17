@@ -36,7 +36,7 @@ func main() {
 	// PORT
 	PORT, err := strconv.Atoi(os.Getenv("PORT"))
 	if err != nil {
-		PORT = 3000
+		PORT = 8080
 	}
 
 	// DEBUG MODE
@@ -51,7 +51,7 @@ func main() {
 		log.Fatal("No encryption secret set up, you must set 'TOKEN_SECRET' environment variable.")
 	}
 
-	// DB CONFIG
+	// DB CONNECTION
 	client := mongodb.Connect()
 	defer func() {
 		if err := client.Disconnect(context.TODO()); err != nil {
@@ -80,7 +80,7 @@ func main() {
 			panic(err)
 		}
 		os.WriteFile("routes.json", data, 0644)
-		// Generate docs
+		// Add swagger ui handler
 		Server.GET("/swagger/*", echoSwagger.WrapHandler)
 	}
 

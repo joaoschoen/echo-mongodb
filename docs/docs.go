@@ -59,6 +59,47 @@ const docTemplate = `{
                 }
             }
         },
+        "/auth/register": {
+            "post": {
+                "description": "Receives user email and password, returns UUID",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "auth"
+                ],
+                "summary": "Create new user",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User email",
+                        "name": "email",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/model.PostUserResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "422": {
+                        "description": "Email already in use"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
         "/user": {
             "put": {
                 "description": "Receives updated user object, returns updated object",
@@ -93,45 +134,6 @@ const docTemplate = `{
                     },
                     "404": {
                         "description": "User not found."
-                    },
-                    "500": {
-                        "description": "Internal server error"
-                    }
-                }
-            },
-            "post": {
-                "description": "Receives user email and password, returns UUID",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "user"
-                ],
-                "summary": "Create new user",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "User email",
-                        "name": "email",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "201": {
-                        "description": "Created",
-                        "schema": {
-                            "$ref": "#/definitions/model.PostUserResponse"
-                        }
-                    },
-                    "400": {
-                        "description": "Bad Request"
-                    },
-                    "422": {
-                        "description": "Email already in use"
                     },
                     "500": {
                         "description": "Internal server error"
@@ -227,7 +229,7 @@ const docTemplate = `{
     },
     "definitions": {
         "model.AuthToken": {
-            "description": "Access token generated from user and password",
+            "description": "Stringified JWT access token",
             "type": "object",
             "properties": {
                 "token": {

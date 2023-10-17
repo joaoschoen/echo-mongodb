@@ -1,6 +1,6 @@
 definitions:
   model.AuthToken:
-    description: Access token generated from user and password
+    description: Stringified JWT access token
     properties:
       token:
         type: string
@@ -82,27 +82,7 @@ paths:
       summary: Login
       tags:
       - auth
-  /user:
-    delete:
-      description: Receives user ID, returns deleted ID
-      parameters:
-      - description: User ID
-        in: path
-        name: id
-        required: true
-        type: string
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/model.DeleteUserResponse'
-        "404":
-          description: User not found.
-      summary: Delete user
-      tags:
-      - user
+  /auth/register:
     post:
       consumes:
       - application/json
@@ -127,6 +107,27 @@ paths:
         "500":
           description: Internal server error
       summary: Create new user
+      tags:
+      - auth
+  /user:
+    delete:
+      description: Receives user ID, returns deleted ID
+      parameters:
+      - description: User ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.DeleteUserResponse'
+        "404":
+          description: User not found.
+      summary: Delete user
       tags:
       - user
     put:
