@@ -2,12 +2,17 @@ package user
 
 import (
 	"API-ECHO-MONGODB/model"
+	"API-ECHO-MONGODB/mongodb"
+	"API-ECHO-MONGODB/test"
+	"context"
 	"math"
 	"net/http"
 	"strconv"
 	"strings"
+	"testing"
 
 	"github.com/labstack/echo/v4"
+	"go.mongodb.org/mongo-driver/mongo"
 )
 
 // DUMMY DATA
@@ -205,4 +210,26 @@ func DeleteUser(echo echo.Context) error {
 	}
 
 	return echo.JSON(http.StatusOK, response)
+}
+
+// TEST SETTINGS
+
+var client *mongo.Client
+
+func setup() {
+	test.LoadTestEnv()
+	client = mongodb.Connect()
+}
+
+func teardown() {
+	// Delete user created during tests
+	if err := client.Disconnect(context.TODO()); err != nil {
+		panic(err)
+	}
+}
+
+func TestMain(m *testing.M) {
+	setup()
+	m.Run()
+	teardown()
 }
