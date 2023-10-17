@@ -100,7 +100,7 @@ func Register(echo echo.Context) error {
 	}
 
 	// BCRIPT
-	hash, err := bcrypt.GenerateFromPassword([]byte(user.Password), bcrypt.DefaultCost)
+	hash, err := bcrypt.GenerateFromPassword([]byte(user.Password), 15)
 	if err != nil {
 		panic(err)
 	}

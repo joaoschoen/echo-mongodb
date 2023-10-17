@@ -1,7 +1,9 @@
 /* global use, db */
 // Select the echo-api database
 use("echo-api");
-//User collection
+
+//Authentication
+
 db.createCollection("user", {
   validator: {
     $jsonSchema: {
@@ -43,17 +45,23 @@ db.createCollection("book", {
   },
 });
 // Insert a few documents into the sales collection.
-db.getCollection('user').insertMany([
+db.getCollection("user").insertMany([
   {
-    _id: ObjectId("652e92a807e9476c2c6a9376"),
-    email: "login@test.com",
-    password: Binary(Buffer.from("JDJhJDEwJGpJeWNhYzFlbWd1azdQT29vM1V3b2VSdWRrRnBsRS80ZXp1cUVFS1RHODViSGRuT004ZzR1","hex"), 0)
+    _id: ObjectId("652e9e72b5de5519e45346de"),
+    email: "alreadyIn@use.com",
+    password: BinData(
+      0,
+      "JDJhJDE1JEUvSmx0dG1kM3pyb0hCcDRyQkVWZXVrV2Yybll1RnptWEN4aDFoZ1M3SkZteUlpUXpPM3R1"
+    ),
   },
   {
-    _id: ObjectId("652e92d107e9476c2c6a9377"),
-    email: "alreadyIn@use.com",
-    password: Binary(Buffer.from("JDJhJDEwJFhhcmtUV1BZWGhZUU41SlJwZlVpVE9TTVIzUGZnT3RvR1VhSHoxOUJUQWdyL0lmRkpXT2JH","hex"), 0)
-  }
+    _id: ObjectId("652e9f48b5de5519e45346df"),
+    email: "login@test.com",
+    password: BinData(
+      0,
+      "JDJhJDE1JGo2VTBlanpRMTZUV0l5VkVXb0VhbWVIMFFpRlFOajFETE5jcjMyZWhxV1lBd1FMa0lqcS9T"
+    ),
+  },
 ]);
 
 // Run a find command to view items sold on April 4th, 2014.
