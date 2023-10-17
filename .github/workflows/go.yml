@@ -25,6 +25,7 @@ jobs:
 
   test:
     runs-on: ubuntu-latest
+    environment: "Test environment"
     steps:
     - uses: actions/checkout@v3
 
