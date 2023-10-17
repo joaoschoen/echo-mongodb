@@ -54,7 +54,6 @@ func TestGetUser(t *testing.T) {
 		context.SetPath("/users/:id")
 		context.SetParamNames("id")
 		context.SetParamValues("someID")
-		return
 	}
 	NotFound := func() {
 		request = httptest.NewRequest(METHOD, URL, nil)
@@ -64,7 +63,6 @@ func TestGetUser(t *testing.T) {
 		context.SetPath("/users/:id")
 		context.SetParamNames("id")
 		context.SetParamValues("404")
-		return
 	}
 
 	// TESTS
@@ -98,7 +96,6 @@ func TestGetUserList(t *testing.T) {
 		request.Header.Set("Content-Type", "application/json")
 		recorder = httptest.NewRecorder()
 		context = TestServer.NewContext(request, recorder)
-		return
 	}
 	CompletePage := func() {
 		q := make(url.Values)
@@ -108,7 +105,6 @@ func TestGetUserList(t *testing.T) {
 		request.Header.Set("Content-Type", "application/json")
 		recorder = httptest.NewRecorder()
 		context = TestServer.NewContext(request, recorder)
-		return
 	}
 	IncompletePaging := func() {
 		q := make(url.Values)
@@ -118,7 +114,6 @@ func TestGetUserList(t *testing.T) {
 		request.Header.Set("Content-Type", "application/json")
 		recorder = httptest.NewRecorder()
 		context = TestServer.NewContext(request, recorder)
-		return
 	}
 	NegativePaging := func() {
 		q := make(url.Values)
@@ -128,7 +123,6 @@ func TestGetUserList(t *testing.T) {
 		request.Header.Set("Content-Type", "application/json")
 		recorder = httptest.NewRecorder()
 		context = TestServer.NewContext(request, recorder)
-		return
 	}
 	// TESTS
 
@@ -138,6 +132,7 @@ func TestGetUserList(t *testing.T) {
 		var objects model.GetUserListResponse
 		err := json.Unmarshal(recorder.Body.Bytes(), &objects)
 		if err != nil {
+			panic(err)
 		}
 		assert.Equal(t, expectedObjects, len(objects.Data))
 	}
@@ -181,6 +176,7 @@ func TestPutUser(t *testing.T) {
 	NotFound := func() {
 		user, err := json.Marshal(successfulUser)
 		if err != nil {
+			panic(err)
 		}
 		DATA = strings.NewReader(string(user))
 		request = httptest.NewRequest(METHOD, URL, DATA)
@@ -194,6 +190,7 @@ func TestPutUser(t *testing.T) {
 	EmptyObjectBodyTest := func() {
 		user, err := json.Marshal(emptyUser)
 		if err != nil {
+			panic(err)
 		}
 		DATA = strings.NewReader(string(user))
 		request = httptest.NewRequest(METHOD, URL, DATA)
@@ -207,6 +204,7 @@ func TestPutUser(t *testing.T) {
 	AlreadyInUseTest := func() {
 		user, err := json.Marshal(alreadyInUseUser)
 		if err != nil {
+			panic(err)
 		}
 		DATA = strings.NewReader(string(user))
 		request = httptest.NewRequest(METHOD, URL, DATA)
@@ -220,6 +218,7 @@ func TestPutUser(t *testing.T) {
 	SuccessTest := func() {
 		user, err := json.Marshal(successfulUser)
 		if err != nil {
+			panic(err)
 		}
 		DATA = strings.NewReader(string(user))
 		request = httptest.NewRequest(METHOD, URL, DATA)

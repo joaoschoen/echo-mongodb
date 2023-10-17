@@ -43,4 +43,4 @@ jobs:
       run: bash launch_db.sh
       
     - name: Test
-      run: go test -v ./...
+      run: bash test.sh

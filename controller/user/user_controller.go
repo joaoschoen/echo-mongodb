@@ -5,7 +5,6 @@ import (
 	"API-ECHO-MONGODB/mongodb"
 	"API-ECHO-MONGODB/test"
 	"context"
-	"math"
 	"net/http"
 	"strconv"
 	"strings"
@@ -31,8 +30,7 @@ var DummyUser = model.SafeUser{
 // @Router			/user/{id} [get]
 func GetUser(echo echo.Context) error {
 	// PARAM
-	var id string
-	id = echo.Param("id")
+	id := echo.Param("id")
 
 	/**
 		DATABASE REQUEST GOES HERE
@@ -113,13 +111,13 @@ func GetUserList(echo echo.Context) error {
 			END = len(filteredList)
 		}
 		responseList = filteredList[START:END]
-		totalPages = int(math.Ceil(float64(len(filteredList) / 2)))
+		totalPages = int(float64(len(filteredList) / 2))
 	} else {
 		if END > len(userList) {
 			END = len(userList)
 		}
 		responseList = userList[START:END]
-		totalPages = int(math.Ceil(float64(len(userList) / 2)))
+		totalPages = int(float64(len(userList) / 2))
 	}
 
 	//BUILD RESPONSE
@@ -147,8 +145,7 @@ func GetUserList(echo echo.Context) error {
 // @Router			/user [put]
 func PutUser(echo echo.Context) error {
 	// PARAM
-	var id string
-	id = echo.Param("id")
+	id := echo.Param("id")
 
 	// BODY
 	var user model.UnsafeUser
@@ -194,8 +191,7 @@ func PutUser(echo echo.Context) error {
 // @Router			/user [delete]
 func DeleteUser(echo echo.Context) error {
 	// PARAM
-	var id string
-	id = echo.Param("id")
+	id := echo.Param("id")
 
 	// SIMULATED NOT FOUND
 	if id == "404" {
