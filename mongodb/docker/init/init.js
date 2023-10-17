@@ -47,7 +47,11 @@ db.getCollection('user').insertMany([
   {
     _id: ObjectId("651f2d851990790417cce077"),
     email: 'login@test.com',
-    password: Binary(Buffer.from("243261243130242e67446743436d3245695343437341424e6d67735775434361474243652f4764756173656871735343507a30675a315353674f6975", "hex"), 0)
+    password: Binary(Buffer.from("JDJhJDEwJC5nRGdDQ20yRWlTQ0NzQUJObWdzV3VDQ2FHQkNlL0dkdWFzZWhxc1NDUHowZ1oxU1NnT2l1", "hex"), 0)
+  },{
+    _id: ObjectId("652e74d1c3f3e27fd02484a8"),
+    email: "alreadyIn@use.com",
+    password: Binary(Buffer.from('JDJhJDEwJGEyOTNkWVBQOFF6MEg1VXpWbEZWR3V1VlNidXV5dFdRSDhzaEhzZEpIQk5GZC9Rd1RyTWRH', "hex"), 0)
   }
 ]);
 
