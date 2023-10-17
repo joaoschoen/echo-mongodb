@@ -52,7 +52,6 @@ func main() {
 	}
 
 	// DB CONFIG
-
 	client := mongodb.Connect()
 	defer func() {
 		if err := client.Disconnect(context.TODO()); err != nil {
@@ -78,7 +77,7 @@ func main() {
 	if DEBUG {
 		data, err := json.MarshalIndent(Server.Routes(), "", "  ")
 		if err != nil {
-
+			panic(err)
 		}
 		os.WriteFile("routes.json", data, 0644)
 		// Generate docs

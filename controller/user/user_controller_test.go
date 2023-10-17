@@ -31,67 +31,6 @@ var (
 	}
 )
 
-func TestPostUser(t *testing.T) {
-	// SETUP
-	TestServer := echo.New()
-	METHOD := http.MethodPost
-	URL := "/user"
-	var DATA *strings.Reader
-	var request *http.Request
-	var recorder *httptest.ResponseRecorder
-	var context echo.Context
-
-	EmptyObjectBodyTest := func() {
-		user, err := json.Marshal(emptyUser)
-		if err != nil {
-		}
-		DATA = strings.NewReader(string(user))
-		request = httptest.NewRequest(METHOD, URL, DATA)
-		request.Header.Set("Content-Type", "application/json")
-		recorder = httptest.NewRecorder()
-		context = TestServer.NewContext(request, recorder)
-		return
-	}
-	AlreadyInUseTest := func() {
-		user, err := json.Marshal(alreadyInUseUser)
-		if err != nil {
-		}
-		DATA = strings.NewReader(string(user))
-		request = httptest.NewRequest(METHOD, URL, DATA)
-		request.Header.Set("Content-Type", "application/json")
-		recorder = httptest.NewRecorder()
-		context = TestServer.NewContext(request, recorder)
-		return
-	}
-	SuccessTest := func() {
-		user, err := json.Marshal(successfulUser)
-		if err != nil {
-		}
-		DATA = strings.NewReader(string(user))
-		request = httptest.NewRequest(METHOD, URL, DATA)
-		request.Header.Set("Content-Type", "application/json")
-		recorder = httptest.NewRecorder()
-		context = TestServer.NewContext(request, recorder)
-		return
-	}
-
-	// TESTS
-	EmptyObjectBodyTest()
-	if assert.NoError(t, PostUser(context)) {
-		assert.Equal(t, http.StatusBadRequest, recorder.Code)
-	}
-
-	AlreadyInUseTest()
-	if assert.NoError(t, PostUser(context)) {
-		assert.Equal(t, http.StatusUnprocessableEntity, recorder.Code)
-	}
-
-	SuccessTest()
-	if assert.NoError(t, PostUser(context)) {
-		assert.Equal(t, http.StatusCreated, recorder.Code)
-	}
-}
-
 // GET TESTS
 var (
 	goodResponse = "{\"Data\":{\"id\":\"someID\",\"email\":\"jon@doe.com\"}}\n"

@@ -69,3 +69,54 @@ func Login(echo echo.Context) error {
 	}
 	return echo.JSON(http.StatusOK, response)
 }
+
+// @Summary		Create new user
+// @Description	Receives user email and password, returns UUID
+// @Tags			user
+// @Accept			json
+// @Produce		json
+// @Param			email	path		string	true	"User email"
+// @Success		201		{object}	model.PostUserResponse
+// @Failure		400 "Bad Request"
+// @Failure		422 "Email already in use"
+// @Failure		500	"Internal server error"
+// @Router			/auth/register [post]
+func Register(echo echo.Context) error {
+	// BODY
+	var user model.UnsafeUser
+	if err := echo.Bind(&user); err != nil {
+		return echo.JSON(http.StatusBadRequest, "Error while parsing received data")
+	}
+
+	// Empty data
+	if user.Email == "" || user.Password == "" {
+		return echo.JSON(http.StatusBadRequest, "Error while parsing received data")
+	}
+
+	// CHECK DUPLICATE
+	var duplicate model.UnsafeUser
+	if err := mongodb.FindOne("user", bson.D{{Key: "email", Value: user.Email}}).Decode(&duplicate); err == nil {
+		return echo.JSON(http.StatusUnprocessableEntity, "Email already in use")
+	}
+
+	// BCRIPT
+	hash, err := bcrypt.GenerateFromPassword([]byte(user.Password), bcrypt.DefaultCost)
+	if err != nil {
+		panic(err)
+	}
+
+	// INSERT
+	insert, err := mongodb.InsertOne("user", bson.D{
+		{Key: "email", Value: user.Email},
+		{Key: "password", Value: hash},
+	})
+	if err != nil {
+		return echo.JSON(http.StatusInternalServerError, nil)
+	}
+
+	// BUILD RESPONSE
+	response := model.PostUserResponse{
+		ID: insert.InsertedID,
+	}
+	return echo.JSON(http.StatusCreated, response)
+}

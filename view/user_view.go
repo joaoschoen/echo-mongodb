@@ -10,7 +10,6 @@ import (
 
 func UserRoutes(server *echo.Echo) {
 	group := server.Group("/user")
-	group.POST("", middleware.CheckBody(user.PostUser, model.UnsafeUser{}))
 	group.GET("/:id", user.GetUser)
 	group.GET("/list", user.GetUserList)
 	group.PUT("/:id", middleware.CheckBody(user.PutUser, model.UnsafeUser{}))

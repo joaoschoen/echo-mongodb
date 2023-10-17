@@ -30,3 +30,14 @@ func InsertOne(collection string, data primitive.D) (*mongo.InsertOneResult, err
 		data,
 	)
 }
+func DeleteOne(collection string, query primitive.D) (*mongo.DeleteResult, error) {
+	// GET DB CONNECTION
+	db := GetConnection()
+	DATABASE := os.Getenv("DATABASE")
+	coll := db.Database(DATABASE).Collection(collection)
+
+	return coll.DeleteOne(
+		context.TODO(),
+		query,
+	)
+}

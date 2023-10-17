@@ -17,10 +17,11 @@ import (
 	// External
 	"github.com/labstack/echo/v4"
 	"github.com/stretchr/testify/assert"
+	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 )
 
-// POST TESTS
+// DUMMY DATA
 var (
 	emptyJsonString = "{}"
 	emptyUser       = model.UnsafeUser{
@@ -39,7 +40,72 @@ var (
 		Email:    "login@test.com",
 		Password: "loginTest",
 	}
+	alreadyInUseUser = model.UnsafeUser{
+		Email:    "alreadyIn@use.com",
+		Password: "BadExample",
+	}
 )
+
+func TestRegister(t *testing.T) {
+	// SETUP
+	TestServer := echo.New()
+	METHOD := http.MethodPost
+	URL := "/user"
+	var DATA *strings.Reader
+	var request *http.Request
+	var recorder *httptest.ResponseRecorder
+	var context echo.Context
+
+	EmptyObjectBodyTest := func() {
+		user, err := json.Marshal(emptyUser)
+		if err != nil {
+			panic(err)
+		}
+		DATA = strings.NewReader(string(user))
+		request = httptest.NewRequest(METHOD, URL, DATA)
+		request.Header.Set("Content-Type", "application/json")
+		recorder = httptest.NewRecorder()
+		context = TestServer.NewContext(request, recorder)
+	}
+	AlreadyInUseTest := func() {
+		user, err := json.Marshal(alreadyInUseUser)
+		if err != nil {
+			panic(err)
+		}
+		DATA = strings.NewReader(string(user))
+		request = httptest.NewRequest(METHOD, URL, DATA)
+		request.Header.Set("Content-Type", "application/json")
+		recorder = httptest.NewRecorder()
+		context = TestServer.NewContext(request, recorder)
+	}
+	SuccessTest := func() {
+		user, err := json.Marshal(successfulUser)
+		if err != nil {
+			panic(err)
+		}
+		DATA = strings.NewReader(string(user))
+		request = httptest.NewRequest(METHOD, URL, DATA)
+		request.Header.Set("Content-Type", "application/json")
+		recorder = httptest.NewRecorder()
+		context = TestServer.NewContext(request, recorder)
+	}
+
+	// TESTS
+	EmptyObjectBodyTest()
+	if assert.NoError(t, Register(context)) {
+		assert.Equal(t, http.StatusBadRequest, recorder.Code)
+	}
+
+	AlreadyInUseTest()
+	if assert.NoError(t, Register(context)) {
+		assert.Equal(t, http.StatusUnprocessableEntity, recorder.Code)
+	}
+
+	SuccessTest()
+	if assert.NoError(t, Register(context)) {
+		assert.Equal(t, http.StatusCreated, recorder.Code)
+	}
+}
 
 func TestLogin(t *testing.T) {
 	// SETUP
@@ -141,6 +207,8 @@ func setup() {
 }
 
 func teardown() {
+	// Delete user created during tests
+	mongodb.DeleteOne("user", bson.D{{Key: "email", Value: successfulUser.Email}})
 	if err := client.Disconnect(context.TODO()); err != nil {
 		panic(err)
 	}
