@@ -36,9 +36,13 @@ var (
 		Email:    "login@test.com",
 		Password: "wrongPassword",
 	}
-	successfulUser = model.UnsafeUser{
+	successfulLogin = model.UnsafeUser{
 		Email:    "login@test.com",
 		Password: "loginTest",
+	}
+	successfulCreation = model.UnsafeUser{
+		Email:    "create@test.com",
+		Password: "createTest",
 	}
 	alreadyInUseUser = model.UnsafeUser{
 		Email:    "alreadyIn@use.com",
@@ -79,7 +83,7 @@ func TestRegister(t *testing.T) {
 		context = TestServer.NewContext(request, recorder)
 	}
 	SuccessTest := func() {
-		user, err := json.Marshal(successfulUser)
+		user, err := json.Marshal(successfulCreation)
 		if err != nil {
 			panic(err)
 		}
@@ -163,7 +167,7 @@ func TestLogin(t *testing.T) {
 		context = TestServer.NewContext(request, recorder)
 	}
 	SuccessfulLogin := func() {
-		user, err := json.Marshal(successfulUser)
+		user, err := json.Marshal(successfulLogin)
 		if err != nil {
 			panic(err)
 		}
@@ -208,7 +212,7 @@ func setup() {
 
 func teardown() {
 	// Delete user created during tests
-	mongodb.DeleteOne("user", bson.D{{Key: "email", Value: successfulUser.Email}})
+	mongodb.DeleteOne("user", bson.D{{Key: "email", Value: successfulCreation.Email}})
 	if err := client.Disconnect(context.TODO()); err != nil {
 		panic(err)
 	}

@@ -45,13 +45,14 @@ db.createCollection("book", {
 // Insert a few documents into the sales collection.
 db.getCollection('user').insertMany([
   {
-    _id: ObjectId("651f2d851990790417cce077"),
-    email: 'login@test.com',
-    password: Binary(Buffer.from("JDJhJDEwJC5nRGdDQ20yRWlTQ0NzQUJObWdzV3VDQ2FHQkNlL0dkdWFzZWhxc1NDUHowZ1oxU1NnT2l1", "hex"), 0)
-  },{
-    _id: ObjectId("652e74d1c3f3e27fd02484a8"),
+    _id: ObjectId("652e92a807e9476c2c6a9376"),
+    email: "login@test.com",
+    password: Binary(Buffer.from("JDJhJDEwJGpJeWNhYzFlbWd1azdQT29vM1V3b2VSdWRrRnBsRS80ZXp1cUVFS1RHODViSGRuT004ZzR1","hex"), 0)
+  },
+  {
+    _id: ObjectId("652e92d107e9476c2c6a9377"),
     email: "alreadyIn@use.com",
-    password: Binary(Buffer.from('JDJhJDEwJGEyOTNkWVBQOFF6MEg1VXpWbEZWR3V1VlNidXV5dFdRSDhzaEhzZEpIQk5GZC9Rd1RyTWRH', "hex"), 0)
+    password: Binary(Buffer.from("JDJhJDEwJFhhcmtUV1BZWGhZUU41SlJwZlVpVE9TTVIzUGZnT3RvR1VhSHoxOUJUQWdyL0lmRkpXT2JH","hex"), 0)
   }
 ]);
 
